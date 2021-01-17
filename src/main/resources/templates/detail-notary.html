@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cartorio</title>
+</head>
+<body>
+<h3 th:text="${notary.name}"></h3>
+<h3 th:text="${notary.address}"></h3>
+<div th:switch="${certificates}">
+    <h2 th:case="null">Nenhuma certidão encontrada</h2>
+    <div th:case="*">
+        <h2>Certidões</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Editar</th>
+                <th>Deletar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="certificate : ${certificates}">
+                <td th:text="${certificate.name}"></td>
+                <td><a th:href="@{/certificates/edit/{certificateId}(certificateId=${certificate.id})}">Editar</a></td>
+                <td><a th:href="@{/certificates/delete/{certificateId}(certificateId=${certificate.id})}">Deletar</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <p><a th:href="@{/notaries/{notaryId}/certificates/save(notaryId=${notaryId})}">Emitir certidão</a></p>
+</div>
+</body>
+</html>

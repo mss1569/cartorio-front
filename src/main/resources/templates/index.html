@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cartorios</title>
+</head>
+<body>
+    <div th:switch="${notaries}">
+        <h2 th:case="null">Nenhum cartorio encontrado</h2>
+        <div th:case="*">
+            <h2>Cartorios</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Endereço</th>
+                    <th>Exibir</th>
+                    <th>Editar</th>
+                    <th>Deletar</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="notary : ${notaries}">
+                    <td th:text="${notary.name}"></td>
+                    <td th:text="${notary.address}"></td>
+                    <td><a th:href="@{/show/{id}(id=${notary.id})}">Exibir</a></td>
+                    <td><a th:href="@{/edit/{id}(id=${notary.id})}">Editar</a></td>
+                    <td><a th:href="@{/delete/{id}(id=${notary.id})}">Deletar</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><a href="/save">Adicionar novo cartorio</a></p>
+    </div>
+</body>
+</html>

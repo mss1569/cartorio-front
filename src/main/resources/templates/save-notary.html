@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cartorio</title>
+</head>
+<body>
+    <form action="#" th:action="@{/save}" th:object="${notaryDTO}" method="post">
+        <label for="name">Nome</label>
+        <input type="text" th:field="*{name}" id="name" placeholder="Nome">
+        <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        <label for="address">Endereço</label>
+        <input type="text" th:field="*{address}" id="address" placeholder="Endereço">
+        <span th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></span>
+        <input type="submit" value="Salvar">
+    </form>
+</body>
+</html>

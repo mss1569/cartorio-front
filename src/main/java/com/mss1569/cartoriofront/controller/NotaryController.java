@@ -95,21 +95,24 @@ public class NotaryController {
         return "redirect:/list";
     }
 
-    @GetMapping("/certificates/edit/{certificateId}")
-    public String showUpdateCertificateForm(@PathVariable Long certificateId,
+    @GetMapping("/notaries/{notaryId}/certificates/edit/{certificateId}")
+    public String showUpdateCertificateForm(@PathVariable Long notaryId,
+                                            @PathVariable Long certificateId,
                                             Model model) {
         model.addAttribute("certificateId", certificateId);
+        model.addAttribute("notaryId", notaryId);
         model.addAttribute("certificateDTO", modelMapper.map(notaryService.findCertificateById(certificateId), CertificateDTO.class));
         return "edit-certificate";
     }
 
-    @PostMapping("/certificates/edit/{certificateId}")
-    public String updateCertificate(@PathVariable Long certificateId,
+    @PostMapping("/notaries/{notaryId}/certificates/edit/{certificateId}")
+    public String updateCertificate(@PathVariable Long notaryId,
+                                    @PathVariable Long certificateId,
                                     @ModelAttribute(value = "certificateDTO") CertificateDTO certificateDTO,
                                     BindingResult errors,
                                     Model model) {
         notaryService.updateCertificate(certificateId,certificateDTO);
-        return "redirect:/list";
+        return "redirect:/show/" + notaryId;
     }
 
     @GetMapping("/delete/{notaryId}")
@@ -119,10 +122,11 @@ public class NotaryController {
         return "redirect:/list";
     }
 
-    @GetMapping("/certificates/delete/{certificateId}")
-    public String deleteCertificate(@PathVariable Long certificateId,
+    @GetMapping("/notaries/{notaryId}/certificates/delete/{certificateId}")
+    public String deleteCertificate(@PathVariable Long notaryId,
+                                    @PathVariable Long certificateId,
                                     Model model) {
         notaryService.deleteCertificate(certificateId);
-        return "redirect:/list";
+        return "redirect:/show/" + notaryId;
     }
 }

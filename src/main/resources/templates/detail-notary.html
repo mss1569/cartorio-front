@@ -24,8 +24,8 @@
             <tbody>
             <tr th:each="certificate : ${certificates}">
                 <td th:text="${certificate.name}"></td>
-                <td><a th:href="@{/certificates/edit/{certificateId}(certificateId=${certificate.id})}">Editar</a></td>
-                <td><a th:href="@{/certificates/delete/{certificateId}(certificateId=${certificate.id})}">Deletar</a></td>
+                <td><a th:href="@{/notaries/{notaryId}/certificates/edit/{certificateId}(notaryId=${notaryId},certificateId=${certificate.id})}">Editar</a></td>
+                <td><a th:href="@{/notaries/{notaryId}/certificates/delete/{certificateId}(notaryId=${notaryId},certificateId=${certificate.id})}">Deletar</a></td>
             </tr>
             </tbody>
         </table>

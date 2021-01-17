@@ -1,7 +1,5 @@
 package com.mss1569.cartoriofront.controller;
 
-import com.mss1569.cartoriofront.domain.Certificate;
-import com.mss1569.cartoriofront.domain.Notary;
 import com.mss1569.cartoriofront.dto.CertificateDTO;
 import com.mss1569.cartoriofront.dto.NotaryDTO;
 import com.mss1569.cartoriofront.service.NotaryService;

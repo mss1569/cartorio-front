@@ -5,6 +5,11 @@ Sistema WEB construido para consumir uma API que fornece serviços para controle
 API: [https://github.com/mss1569/cartorio](https://github.com/mss1569/cartorio)
 
 ### Como rodar:
+
+#### Usando Docker:
+```docker run --name cartorio-front -p 8080:8080 mss1569/cartorio-front```
+
+#### Usando Maven:
 >```
 >mvn -B package --file pom.xml
 >java -jar target/cartorio-front-0.0.1-SNAPSHOT.jar

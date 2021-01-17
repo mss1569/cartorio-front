@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
+
 @Controller
 public class NotaryController {
     @Autowired
@@ -47,9 +49,12 @@ public class NotaryController {
     }
 
     @PostMapping("/notaries/save")
-    public String save(@ModelAttribute(value = "notaryDTO") NotaryDTO notaryDTO,
+    public String save(@Valid @ModelAttribute(value = "notaryDTO") NotaryDTO notaryDTO,
                        BindingResult errors,
                        Model model) {
+        if (errors.hasErrors())
+            return "save-notary";
+
         notaryService.save(notaryDTO);
         return "redirect:/";
     }
@@ -64,9 +69,12 @@ public class NotaryController {
 
     @PostMapping("/notaries/edit/{notaryId}")
     public String update(@PathVariable Long notaryId,
-                         @ModelAttribute(value = "notaryDTO") NotaryDTO notaryDTO,
+                         @Valid @ModelAttribute(value = "notaryDTO") NotaryDTO notaryDTO,
                          BindingResult errors,
                          Model model) {
+        if (errors.hasErrors())
+            return "edit-notary";
+
         notaryService.update(notaryId,notaryDTO);
         return "redirect:/";
     }
@@ -91,9 +99,12 @@ public class NotaryController {
 
     @PostMapping("/notaries/{notaryId}/certificates/save")
     public String saveCertificate(@PathVariable Long notaryId,
-                                  @ModelAttribute(value = "certificateDTO") CertificateDTO certificateDTO,
+                                  @Valid @ModelAttribute(value = "certificateDTO") CertificateDTO certificateDTO,
                                   BindingResult errors,
                                   Model model) {
+        if (errors.hasErrors())
+            return "save-certificate";
+
         notaryService.saveCertificate(notaryId, certificateDTO);
         return "redirect:/notaries/show/" + notaryId;
     }
@@ -111,9 +122,12 @@ public class NotaryController {
     @PostMapping("/notaries/{notaryId}/certificates/edit/{certificateId}")
     public String updateCertificate(@PathVariable Long notaryId,
                                     @PathVariable Long certificateId,
-                                    @ModelAttribute(value = "certificateDTO") CertificateDTO certificateDTO,
+                                    @Valid @ModelAttribute(value = "certificateDTO") CertificateDTO certificateDTO,
                                     BindingResult errors,
                                     Model model) {
+        if (errors.hasErrors())
+            return "edit-certificate";
+
         notaryService.updateCertificate(certificateId,certificateDTO);
         return "redirect:/notaries/show/" + notaryId;
     }

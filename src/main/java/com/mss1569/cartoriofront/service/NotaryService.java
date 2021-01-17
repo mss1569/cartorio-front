@@ -5,8 +5,6 @@ import com.mss1569.cartoriofront.domain.Notary;
 import com.mss1569.cartoriofront.dto.CertificateDTO;
 import com.mss1569.cartoriofront.dto.NotaryDTO;
 import com.mss1569.cartoriofront.wrapper.PageableResponse;
-import lombok.extern.log4j.Log4j2;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-@Log4j2
 public class NotaryService {
     private static final String basePath = "https://mss1569-cartorio.herokuapp.com/api/v1";
 

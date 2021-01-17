@@ -3,7 +3,6 @@ package com.mss1569.cartoriofront.controller;
 import com.mss1569.cartoriofront.dto.CertificateDTO;
 import com.mss1569.cartoriofront.dto.NotaryDTO;
 import com.mss1569.cartoriofront.service.NotaryService;
-import lombok.extern.log4j.Log4j2;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -16,21 +15,20 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-@Log4j2
 public class NotaryController {
     @Autowired
     private NotaryService notaryService;
     @Autowired
     private ModelMapper modelMapper;
 
-    @GetMapping({"/list", "/"})
+    @GetMapping({"/notaries/list", "/"})
     public String listAll(Model model,
                           Pageable pageable) {
         model.addAttribute("notaries", notaryService.listAll(pageable));
         return "index";
     }
 
-    @GetMapping("/show/{notaryId}")
+    @GetMapping("/notaries/show/{notaryId}")
     public String showNotary(@PathVariable Long notaryId,
                              Model model,
                              Pageable pageable) {
@@ -39,7 +37,7 @@ public class NotaryController {
         return "detail-notary";
     }
 
-    @GetMapping("/save")
+    @GetMapping("/notaries/save")
     public String showSaveForm(Model model) {
         NotaryDTO notaryDTO = NotaryDTO.builder()
                 .build();
@@ -48,12 +46,36 @@ public class NotaryController {
         return "save-notary";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/notaries/save")
     public String save(@ModelAttribute(value = "notaryDTO") NotaryDTO notaryDTO,
                        BindingResult errors,
                        Model model) {
         notaryService.save(notaryDTO);
-        return "redirect:/list";
+        return "redirect:/";
+    }
+
+    @GetMapping("/notaries/edit/{notaryId}")
+    public String showUpdateForm(@PathVariable Long notaryId,
+                                 Model model) {
+        model.addAttribute("notaryId", notaryId);
+        model.addAttribute("notaryDTO", modelMapper.map(notaryService.findById(notaryId), NotaryDTO.class));
+        return "edit-notary";
+    }
+
+    @PostMapping("/notaries/edit/{notaryId}")
+    public String update(@PathVariable Long notaryId,
+                         @ModelAttribute(value = "notaryDTO") NotaryDTO notaryDTO,
+                         BindingResult errors,
+                         Model model) {
+        notaryService.update(notaryId,notaryDTO);
+        return "redirect:/";
+    }
+
+    @GetMapping("/notaries/delete/{notaryId}")
+    public String delete(@PathVariable Long notaryId,
+                         Model model) {
+        notaryService.delete(notaryId);
+        return "redirect:/";
     }
 
     @GetMapping("/notaries/{notaryId}/certificates/save")
@@ -73,24 +95,7 @@ public class NotaryController {
                                   BindingResult errors,
                                   Model model) {
         notaryService.saveCertificate(notaryId, certificateDTO);
-        return "redirect:/show/" + notaryId;
-    }
-
-    @GetMapping("/edit/{notaryId}")
-    public String showUpdateForm(@PathVariable Long notaryId,
-                                 Model model) {
-        model.addAttribute("notaryId", notaryId);
-        model.addAttribute("notaryDTO", modelMapper.map(notaryService.findById(notaryId), NotaryDTO.class));
-        return "edit-notary";
-    }
-
-    @PostMapping("/edit/{notaryId}")
-    public String update(@PathVariable Long notaryId,
-                         @ModelAttribute(value = "notaryDTO") NotaryDTO notaryDTO,
-                         BindingResult errors,
-                         Model model) {
-        notaryService.update(notaryId,notaryDTO);
-        return "redirect:/list";
+        return "redirect:/notaries/show/" + notaryId;
     }
 
     @GetMapping("/notaries/{notaryId}/certificates/edit/{certificateId}")
@@ -110,14 +115,7 @@ public class NotaryController {
                                     BindingResult errors,
                                     Model model) {
         notaryService.updateCertificate(certificateId,certificateDTO);
-        return "redirect:/show/" + notaryId;
-    }
-
-    @GetMapping("/delete/{notaryId}")
-    public String delete(@PathVariable Long notaryId,
-                         Model model) {
-        notaryService.delete(notaryId);
-        return "redirect:/list";
+        return "redirect:/notaries/show/" + notaryId;
     }
 
     @GetMapping("/notaries/{notaryId}/certificates/delete/{certificateId}")
@@ -125,6 +123,6 @@ public class NotaryController {
                                     @PathVariable Long certificateId,
                                     Model model) {
         notaryService.deleteCertificate(certificateId);
-        return "redirect:/show/" + notaryId;
+        return "redirect:/notaries/show/" + notaryId;
     }
 }

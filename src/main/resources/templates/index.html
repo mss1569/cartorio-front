@@ -15,7 +15,7 @@
         <div class="card-body">
             <div th:switch="${notaries}" class="container my-5">
                 <p class="my-5">
-                    <a href="/save" class="btn btn-primary"><i
+                    <a href="/notaries/save" class="btn btn-primary"><i
                             class="fas fa-user-plus ml-2">Criar Novo</i></a>
                 </p>
                 <div class="col-md-10">
@@ -35,9 +35,9 @@
                             <tr th:each="notary : ${notaries}">
                                 <td th:text="${notary.name}"></td>
                                 <td th:text="${notary.address}"></td>
-                                <td><a th:href="@{/show/{id}(id=${notary.id})}" class="btn btn-primary"><i class="fas fa-address-card ml-2"></i></a></td>
-                                <td><a th:href="@{/edit/{id}(id=${notary.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-                                <td><a th:href="@{/delete/{id}(id=${notary.id})}" class="btn btn-danger"><i class="fas fa-user-times ml-2"></i></a></td>
+                                <td><a th:href="@{/notaries/show/{id}(id=${notary.id})}" class="btn btn-primary"><i class="fas fa-address-card ml-2"></i></a></td>
+                                <td><a th:href="@{/notaries/edit/{id}(id=${notary.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+                                <td><a th:href="@{/notaries/delete/{id}(id=${notary.id})}" class="btn btn-danger"><i class="fas fa-user-times ml-2"></i></a></td>
                             </tr>
                             </tbody>
                         </table>
